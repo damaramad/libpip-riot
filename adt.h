@@ -41,6 +41,13 @@
 #define __ADT_H__
 
 /*!
+ * \def VIDT_INTERRUPT_NUMBER
+ *
+ * \brief The number of interrupt for the nRF52832.
+ */
+#define VIDT_INTERRUPT_NUMBER 54
+
+/*!
  * \brief blockAttr structure
  */
 typedef struct blockAttr
@@ -63,5 +70,14 @@ typedef union blockOrError_t
     int32_t error               ;   //!< Error -1 for an empty block
     blockAttr_t blockAttr       ;   //!< A block's publicly exposed attributes
 }__attribute__((packed)) blockOrError;
+
+/*!
+ * \brief Structure representing the VIDT.
+ */
+typedef struct vidt_s
+{
+	uint32_t currentInterrupt;             /*<! The last interrupt number. */
+	void *contexts[VIDT_INTERRUPT_NUMBER]; /*<! Pointers to contexts to restore. */
+} vidt_t;
 
 #endif /* __ADT_H__ */
