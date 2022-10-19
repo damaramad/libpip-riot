@@ -415,8 +415,7 @@ Pip_setIntState(
 
 static inline uint32_t
 Pip_in(
-	uint32_t registerId,
-	uint32_t *value
+	uint32_t registerId
 ) {
 	register uint32_t r0 __asm__("r0");
 	register uint32_t r1 __asm__("r1");
@@ -426,18 +425,15 @@ Pip_in(
 	__asm__ volatile
 	(
 		"svc #16"
-		: "+r" (r0),
-		  "=r" (r1)
-		:
+		: "=r" (r1)
+		: "r" (r0)
 		: "memory"
 	);
 
-	*value = r1;
-
-	return r0;
+	return r1;
 }
 
-static inline uint32_t
+static inline void
 Pip_out(
 	uint32_t registerId,
 	uint32_t value
@@ -451,12 +447,11 @@ Pip_out(
 	__asm__ volatile
 	(
 		"svc #17"
-		: "+r" (r0)
-		: "r" (r1)
+		:
+		: "r" (r0),
+		  "r" (r1)
 		: "memory"
 	);
-
-	return r0;
 }
 
 #endif /* __SVC_H__ */
