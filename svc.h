@@ -278,31 +278,21 @@ Pip_findBlock(
 	register uint32_t r0 __asm__("r0");
 	register uint32_t r1 __asm__("r1");
 	register uint32_t r2 __asm__("r2");
-	register uint32_t r3 __asm__("r3");
 
 	r0 = (uint32_t) partDescBlockId;
 	r1 = (uint32_t) addrInBlock;
+	r2 = (uint32_t) blockAddr;
 
 	__asm__ volatile
 	(
 		"svc #10"
-		: "+r" (r0),
-		  "+r" (r1),
-		  "=r" (r2),
-		  "=r" (r3)
-		:
+		: "+r" (r0)
+		: "r" (r1),
+		  "r" (r2)
 		: "memory"
 	);
 
-	blockAddr->blockAttr.blockentryaddr = (uint32_t *) r0;
-	blockAddr->blockAttr.blockstartaddr = (uint32_t *) r1;
-	blockAddr->blockAttr.blockendaddr   = (uint32_t *) r2;
-	blockAddr->blockAttr.read           = (r3 & 1);
-	blockAddr->blockAttr.write          = ((r3 >> 1) & 1);
-	blockAddr->blockAttr.exec           = ((r3 >> 2) & 1);
-	blockAddr->blockAttr.accessible     = ((r3 >> 3) & 1);
-
-	return (int32_t) blockAddr->error;
+	return (int32_t) r0;
 }
 
 static inline uint32_t
