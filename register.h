@@ -325,6 +325,7 @@
 	macro_b(NRF_TWIM_TWIM1, RXD_MAXCNT, registerAccessReadWrite, base, 0x538), \
 	macro_b(NRF_TWIM_TWIM1, TXD_PTR, registerAccessReadWrite, base, 0x544), \
 	macro_b(NRF_TWIM_TWIM1, TXD_MAXCNT, registerAccessReadWrite, base, 0x548), \
+	macro_b(NRF_TWIM_TWIM1, TXD_MAXAMOUNT, registerAccessReadWrite, base, 0x54C), \
 	macro_b(NRF_TWIM_TWIM1, ADDRESS, registerAccessReadWrite, base, 0x588)
 
 #define NRF_GPIOTE_INSTANCE(base, macro_a, macro_b) \
